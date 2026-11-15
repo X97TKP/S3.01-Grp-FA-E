@@ -43,3 +43,22 @@
   - Création d'un utilisateur PostgreSQL restreint (`sae_reader`) utilisé exclusivement par l'application web.
   - Restriction stricte des droits accordés à la simple consultation (`GRANT SELECT`).
   - Blocage de toute tentative d'altération ou de destruction des données (`INSERT`, `UPDATE`, `DELETE`, `DROP`) depuis l'interface web, limitant l'impact de failles de sécurité (injections SQL).
+
+  ## Intégration Git et Espace de travail collaboratif (Novembre 2026)
+
+- **Liaison avec le dépôt GitHub :**
+  - Clonage du dépôt de l'équipe (`S3.01-Grp-FA-E`) directement à la racine du dossier de développement du serveur web, permettant à Apache de servir immédiatement les fichiers mis à jour.
+  - Utilisation du protocole de synchronisation classique (`git pull` / `git push`) pour maintenir le code du serveur aligné avec les environnements locaux (PC principal) des développeurs.
+- **Gestion des permissions Git collaboratives :**
+  - Ajout d'une exception de sécurité globale (`git config --global --add safe.directory`) pour autoriser l'exécution des commandes Git par tous les membres de l'équipe sur un dossier appartenant à l'administrateur, contournant ainsi le blocage natif de Git lié au "propriétaire douteux" tout en conservant le bénéfice du groupe `sae-dev`.
+- **Politique de versioning (Fichier `.gitignore`) :**
+  - Exclusion stricte des archives de données brutes IMDb (`imdb_datasets/`, `*.tsv.gz`) pour ne pas surcharger le dépôt GitHub.
+  - Exclusion des fichiers de journalisation d'arrière-plan (`nohup.out`, `*.log`) et des fichiers de configuration spécifiques aux IDE (ex: `.vscode/`).
+
+## Bilan de l'infrastructure
+
+À ce stade, l'ensemble des fondations techniques (Serveur Debian, Docker, Réseau, Reverse Proxy, SGBD et Git) est totalement opérationnel.
+L'équipe dispose :
+
+1. D'un **environnement de développement** sécurisé, synchronisé via Git, où chaque membre peut coder, exécuter des scripts de chargement massif (Bash/Python via `tmux`) et interagir avec la base de données de test en toute autonomie.
+2. D'un **environnement de production** isolé et inviolable, prêt à accueillir la version finale de l'application cinématographique sans risque pour l'intégrité des données ou du serveur hôte.
