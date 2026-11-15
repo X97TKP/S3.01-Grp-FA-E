@@ -3,36 +3,36 @@
 **Date de rendu :** 15 novembre 2026
 **Équipe :** Thomas Chandellier (manager), Tom Peyredieu, Théo Bordes-Da Silva, Lissam Loufti
 
-## 1. Analyse de la base de données fournie
+1. ## Analyse de la base de données fournie
 
-Les données brutes d'IMDb sont réparties dans 7 fichiers compressés (`.tsv.gz`). Chaque fichier contient des millions de lignes nécessitant une structuration rigoureuse dans un SGBDR pour garantir les performances et l'intégrité référentielle.
+Les données brutes d'IMDb sont répartis dans 7 fichier compressés (`.tsv.gz`). Chaque fichier contient des millions de lignes necessitant une structuration rigoureuse dans un SGBDR pour garantir les performance et l'intégrité référentielle.
 
 **Choix techniques :**
 
 - **SGBD :** PostgreSQL 16 (Conteneur Docker `db_dev`).
 
-- **Types de données :** Utilisation intensive du type `TEXT` pour les titres et les noms afin de prévenir les erreurs de dépassement (`VARCHAR` trop courts).
+- **Types de données :** Utilisation intensif du type `TEXT` pour les titres et les noms afin de prévenir les erreur de dépassement (`VARCHAR` trop courts).
 
-- **Tableaux (Arrays) :** Les listes fournies par IMDb (comme `genres`, `directors`, `primaryProfession`) sont stockées sous forme de `TEXT` brut délimité par des virgules pour optimiser la vitesse d'importation, et seront traitées de manière applicative (PHP) ou par des vues SQL ultérieures.
+- **Tableaux (Arrays) :** Les listes fournies par IMDb (comme `genres`, `directors`, `primaryProfession`) sont stocké sous forme de `TEXT` brut délimité par des virgules pour optimisé la vitesse d'importation, et serons traiter de manière applicative (PHP) ou par des vues SQL ultérieures.
 
 ## 2. Diagramme UML de la base de données
 
-Voici la modélisation de notre base de données. Les relations respectent strictement les dépendances identifiées dans les fichiers sources.
+Voici la modelisation de notre base de donnée. Les relations respectes strictement les dépendances identifier dans les fichiers sources.
 ![Diagramme UML de la base de données](./image_pour_md/uml.png)
 
 ## 3. Scripts d'automatisation (Téléchargement et Chargement)
 
-Afin de maintenir la base de données à jour de manière automatisée, nous avons développé deux scripts distincts (disponibles à la racine de notre dépôt Git) :
+Afin de maintenir la base de donnée a jour de manière automatisé, nous avons développés deux scripts distincts (disponibles à la racine de notre dépôt Git) :
 
-1. **`download_imdb.py`** : Script Python qui interroge les serveurs `datasets.imdbws.com`, télécharge les 7 archives `.tsv.gz` de manière sécurisée (gestion des erreurs HTTP) et calcule la taille et le temps de téléchargement de chaque fichier.
+1. **`download_imdb.py`** : Script Python qui interroge les serveur `datasets.imdbws.com`, télécharge les 7 archives `.tsv.gz` de manière sécurisé (gestion des erreurs HTTP) et calcul la taille et le temps de téléchargement de chaque fichier.
 
-2. **`load_imdb.sh`** : Script Bash s'exécutant directement sur le serveur Debian. Il décompresse les données à la volée (`zcat`) et les injecte dans le conteneur PostgreSQL via la commande native `COPY`. L'ordre d'insertion est strictement défini pour respecter les contraintes de clés étrangères (ex: `title_basics` avant `title_akas`).
+2. **`load_imdb.sh`** : Script Bash s'executant directement sur le serveur Debian. Il decompresse les données a la volé (`zcat`) et les injectes dans le conteneur PostgreSQL via la commande native `COPY`. L'ordre d'insertion est strictement définit pour respecté les contraintes de clés étrangères (ex: `title_basics` avant `title_akas`).
 
 _(Le script de création des tables est disponible dans le fichier `schema_imdb.sql`)_.
 
 ## 4. Indicateurs de performance
 
-Lors de notre exécution sur le serveur (Debian / PostgreSQL 16) le 15 novembre 2026, les performances relevées par nos scripts ont été les suivantes :
+Lors de notre execution sur le serveur (Debian / PostgreSQL 16) le 15 novembre 2026, les performances relevé par nos script on été les suivantes :
 
 ### A. Phase de récupération (Téléchargement HTTP)
 
@@ -54,18 +54,18 @@ Lors de notre exécution sur le serveur (Debian / PostgreSQL 16) le 15 novembre 
 
 ### B. Phase de chargement (Insertion PostgreSQL - COPY)
 
-- Insertion dans `name_basics` : _\[Temps à relever dans le tmux\]_
+- Insertion dans `name_basics` : _\[pas encore fini\]_
 
-- Insertion dans `title_basics` : _\[Temps à relever dans le tmux\]_
+- Insertion dans `title_basics` : _\[pas encore fini\]_
 
-- Insertion dans `title_akas` : _\[Temps à relever dans le tmux\]_
+- Insertion dans `title_akas` : _\[pas encore fini\]_
 
-- Insertion dans `title_crew` : _\[Temps à relever dans le tmux\]_
+- Insertion dans `title_crew` : _\[pas encore fini\]_
 
-- Insertion dans `title_episode` : _\[Temps à relever dans le tmux\]_
+- Insertion dans `title_episode` : _\[pas encore fini\]_
 
-- Insertion dans `title_principals` : _\[Temps à relever dans le tmux\]_
+- Insertion dans `title_principals` : _\[pas encore fini\]_
 
-- Insertion dans `title_ratings` : _\[Temps à relever dans le tmux\]_
+- Insertion dans `title_ratings` : _\[pas encore fini\]_
 
-- **Temps total d'insertion en BDD : _\[Temps final à relever\]_ secondes.**
+- **Temps total d'insertion en BDD : _\[pas encore fini\]_ secondes.**
