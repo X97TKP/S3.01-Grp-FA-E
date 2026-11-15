@@ -54,18 +54,16 @@ Lors de notre execution sur le serveur (Debian / PostgreSQL 16) le 15 novembre 2
 
 ### B. Phase de chargement (Insertion PostgreSQL - COPY)
 
-- Insertion dans `name_basics` : _\[pas encore fini\]_
+- Insertion dans `name_basics` :8 sec
 
-- Insertion dans `title_basics` : _\[pas encore fini\]_
+- Insertion dans `title_basics` : 6 sec
+- Insertion dans `title_akas` : 2353 sec
 
-- Insertion dans `title_akas` : _\[pas encore fini\]_
+- Insertion dans `title_crew` : 294 sec
+- Insertion dans `title_episode` : 14 sec
 
-- Insertion dans `title_crew` : _\[pas encore fini\]_
+- Insertion dans `title_principals` : 2697 sec
 
-- Insertion dans `title_episode` : _\[pas encore fini\]_
+- Insertion dans `title_ratings` : 53 sec
 
-- Insertion dans `title_principals` : _\[pas encore fini\]_
-
-- Insertion dans `title_ratings` : _\[pas encore fini\]_
-
-- **Temps total d'insertion en BDD : _\[pas encore fini\]_ secondes.**
+- **Temps total d'insertion en BDD : 5425 secondes.**
