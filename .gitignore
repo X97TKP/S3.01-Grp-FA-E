@@ -1,0 +1,10 @@
+# Données brutes IMDb
+imdb_datasets/
+*.tsv.gz
+
+# Fichiers de log et processus
+nohup.out
+*.log
+
+# Configurations locales des éditeurs
+.vscode/
